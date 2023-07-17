@@ -1,2 +1,9 @@
 # hand_tracker
 Detecting and tracking hands using OpenCV and MediaPipe
+I have used the in-built camera of my laptop as the primary sensor to capture videos for hand detection and tracking in real time. 
+I have used OpenCV and MediaPipe as my main libraries for image processing and hand tracking.  
+I have created a class called hand_detector in my code. This class initializes the hand detector from mediapipe library. The detection and tracking confidence I have used is 50%, this can be changed to increase the efficiency of the system. Currently, the model detects only 1 hand in the frame, this can be changed using the argument “maxHands” in the initialization function. 
+
+Firstly, we change the BGR image read by OpenCV to RGB image using cv2.cvtColor().  The results variable then stores the prediction made by the process function. Now, we access the hand landmarks using the results variable and draw the key points of the hand. MediaPipe considers 21 points for hand detection. Since we only consider 1 hand in this case, we obtain the key points of the hand number 0. This gives a list of coordinates along with ids of the key points. We draw a circle around these key points and hence hands are detected and tracked in the video. 
+
+Due to hardware constraint, I have considered a rectangular box or a vertical line to be a machine (or critical part). The idea is that, once the hands are detected using the above method, we continuously check the coordinates of key points and calculate their distance with the coordinates of the assumed machine/ machine part I.e., the vertical line. If the distance between key points and the line is greater than some threshold, there is no danger, and the operation can run normally. If the distance is less than some threshold, then we display a danger text on the video itself. In the actual operation, we can buzz an alarm or switch on the light over that particular machine. 
